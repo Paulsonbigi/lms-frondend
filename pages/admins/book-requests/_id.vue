@@ -1,8 +1,55 @@
 <template>
     <main>
         <v-item-group active-class="primary">
-            <v-container>
                 <div class="text-h6 text-left font-weight-medium grey--text mb-10 text-capitalize">'{{bookTitle}}'</span></div>
+                <div>
+                    <v-row>
+                        <v-col cols="12" md="4">
+                            <div class="d-flex items-center">
+                                <v-text-field
+                                    v-model="search"
+                                    placeholder="Password"
+                                    append-icon="mdi-magnify"
+                                    dense
+                                    outlined
+                                    block
+                                    height="40"
+                                    :required="true"
+                                    class="ma-0 p-0 mb-3"
+                                />
+                                <!--<v-select
+                                    :items="items"
+                                    dense
+                                    solo
+                                    height="40"
+                                    width="40"
+                                    append-icon="mdi-filter"
+                                    ><v-icon>
+                                        mdi-filter
+                                    </v-icon></v-select -->
+                                <v-btn
+                                    class="ml-1"
+                                    depressed
+                                    height="40"
+                                    width="40"
+                                    :loading="loading"
+                                    :disabled="loading"
+                                    color="primary"
+                                    @click="loader = 'loading'"
+                                    >
+                                    <v-icon>
+                                        mdi-filter
+                                    </v-icon>
+                                </v-btn>
+                            </div>
+                        </v-col>
+                        <div>
+                        </div>
+                        <v-col cols="12" md="8">
+                            <v-btn class="ml-auto d-flex" color="primary" depressed>Lend Book</v-btn>
+                        </v-col>
+                    </v-row>
+                </div>
                 <v-row>
                     <v-col  cols="12" >
                         <div class="text-subtitle-1 text-left font-weight-normal grey--text mb-2" v-if="!books">
@@ -28,9 +75,14 @@
                                     class="grey--text"
                                     >
                                         <td>
-                                            <nuxt-link :to="'/books/' + item.id" class="grey--text">{{ item.title }}</nuxt-link>
+                                            {{ item.title }}
                                         </td>
-                                        <td class="text-center">{{ item.availebleCopies }}</td>
+                                        <td class="text-center d-flex justify-center">
+                                            <v-checkbox
+                                                v-model="checkbox"
+                                                class="my-auto d-flex"
+                                            ></v-checkbox>
+                                        </td>
                                     </tr>
                                 </tbody>
                                 </template>
@@ -38,7 +90,6 @@
                             </template>
                     </v-col>
                 </v-row>
-            </v-container>
         </v-item-group>
     </main>
 </template>
@@ -48,7 +99,11 @@ export default {
   layout: 'admin',
   data(){
       return {
+          loading: false,
+          search: null,
             bookTitle: 'Purpose driven life',
+            checkbox: false,
+            items: ['author', 'year'],
             books: [ 
                 {title: 'Purpose driven life', availebleCopies: 10, id: '121313311'},
                 {title: 'Purpose driven life', availebleCopies: 10, id: '121313331'},

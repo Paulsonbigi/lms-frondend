@@ -32,6 +32,9 @@
                             <v-text-field
                             v-model="login.password"
                             placeholder="Password"
+                            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                            :type="show1 ? 'text' : 'password'"
+                            @click:append="show1 = !show1"
                             :rules="rule"
                             label="Password"
                             dense
@@ -76,6 +79,7 @@ export default {
   data: () => ({
     dialog: true,
     valid: false,
+    show1: false,
     login: {
       usernameEmailPhoneNumber: "",
       password: "",

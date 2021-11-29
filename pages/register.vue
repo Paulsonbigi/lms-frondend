@@ -60,12 +60,15 @@
                                     <v-text-field
                                     v-model="register.password"
                                     placeholder="Password"
+                                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                                    :type="show1 ? 'text' : 'password'"
                                     label="Password"
                                     dense
                                     outlined
                                     block
                                     :required="true"
                                     class="ma-0 p-0 "
+                                    @click:append="show1 = !show1"
                                     />
                                 </div>
                                 <div>
@@ -140,6 +143,7 @@ export default {
   data: () => ({
     dialog: true,
     valid: false,
+    show1: false,
     register: {
       firstName: null,
       lastName: null,

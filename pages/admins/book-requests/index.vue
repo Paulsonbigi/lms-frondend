@@ -1,8 +1,42 @@
 <template>
     <main>
         <v-item-group active-class="primary">
-            <v-container>
-                
+                <div>
+                    <v-row>
+                        <v-col cols="12" md="4">
+                            <div class="d-flex items-center">
+                                <v-text-field
+                                    v-model="search"
+                                    placeholder="Password"
+                                    append-icon="mdi-magnify"
+                                    dense
+                                    outlined
+                                    block
+                                    height="40"
+                                    :required="true"
+                                    class="ma-0 p-0 mb-3"
+                                />
+                                <v-btn
+                                    class="ml-1"
+                                    depressed
+                                    height="40"
+                                    width="40"
+                                    :loading="loading"
+                                    :disabled="loading"
+                                    color="primary"
+                                    @click="loader = 'loading'"
+                                    >
+                                    <v-icon>
+                                        mdi-filter
+                                    </v-icon>
+                                </v-btn>
+                            </div>
+                        </v-col>
+                        <div>
+                        </div>
+                    </v-row>
+                </div>
+
                 <v-row>
                     <v-col  cols="12" >
                         <div class="text-subtitle-1 text-left font-weight-normal grey--text mb-2" v-if="!books">
@@ -28,7 +62,7 @@
                                     class="grey--text"
                                     >
                                         <td>
-                                            <nuxt-link :to="'/books/' + item.id" class="grey--text">{{ item.title }}</nuxt-link>
+                                            <nuxt-link :to="'/admins/book-requests/' + item.id" class="grey--text">{{ item.title }}</nuxt-link>
                                         </td>
                                         <td class="text-center">{{ item.availebleCopies }}</td>
                                     </tr>
@@ -38,7 +72,6 @@
                             </template>
                     </v-col>
                 </v-row>
-            </v-container>
         </v-item-group>
     </main>
 </template>
@@ -48,6 +81,8 @@ export default {
   layout: 'admin',
   data(){
       return {
+          loading: false,
+          search: null,
           books: [ 
               {title: 'Purpose driven life', availebleCopies: 10, id: '121313311'},
               {title: 'Purpose driven life', availebleCopies: 10, id: '121313331'},
