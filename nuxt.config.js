@@ -1,6 +1,10 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
+  server: {
+    port: process.env.PORT,
+  },
+  ssr: true,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - client',
@@ -25,6 +29,9 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    "~/plugins/mixins/validation",
+    "~/plugins/mixins/axios",
+    "~/plugins/mixins/user",
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -38,7 +45,42 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next'
   ],
+
+  axios: {
+    baseURL: process.env.API_HOST  // here set your API url
+  },
+
+
+  auth: {
+    strategies: {
+      local: {
+//      scheme: "refresh",
+        token: {
+          property: "token", //property name that the Back-end sends for you as a access token for saving on localStorage and cookie of user browser
+          global: true,
+          required: true,
+          type: "Bearer"
+        },
+        user: {
+          property: "user",
+          autoFetch: true
+        },
+//      refreshToken: {  // it sends request automatically when the access token expires, and its expire time has set on the Back-end and does not need to we set it here, because is useless
+//        property: "refresh_token", // property name that the Back-end sends for you as a refresh token for saving on localStorage and cookie of user browser
+//        data: "refresh_token", // data can be used to set the name of the property you want to send in the request.
+//      },
+        endpoints: {
+          login: { url: "/user/login", method: "post" },
+//        refresh: { url: "/api/auth/refresh-token", method: "post" },
+          logout: { url: "/user/logout", method: "post" }, //  we don't have an endpoint for our logout in our API and we just remove the token from localstorage
+          user: { url: "/user/single-user", method: "get" }
+        }
+      }
+    }
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {

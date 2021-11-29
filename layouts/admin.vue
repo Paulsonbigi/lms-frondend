@@ -68,7 +68,7 @@
       <template class="d-flex align-center">
         <v-app-bar-nav-icon color="primary" @click.stop="drawer = !drawer" />
         <div class="d-flex align-center ml-2">
-          <p class="d-flex my-auto font-weight-medium text-capitalize d-none d-md-block primary--text text-h5">Welcome, <span class="accent--text pl-2">{{username}}</span></p>
+          <p class="d-flex my-auto font-weight-medium text-capitalize d-none d-md-block primary--text text-h5">Welcome, <span class="accent--text pl-2"> {{username}}</span></p>
         </div>
       </template>
 
@@ -129,7 +129,7 @@ export default {
     drawer: true,
     userPicture: false,
     logo: false,
-    username: "User",
+    username: "Admin",
     profileItems: [
       {
         title: "User profile",
@@ -140,22 +140,27 @@ export default {
     items: [
       {
         title: "Dashboard",
-        to: "/dashboard",
+        to: "/admins/dashboard",
         icon: "/svg/dashboard.svg",
       },
       {
-        title: "All Books",
-        to: "/books",
+        title: "All Users",
+        to: "/admins/users",
         icon: "/svg/user.svg",
       },
       {
-        title: "Your Shelf",
-        to: "/dashboard",
+        title: "All Books",
+        to: "/admins/all-books",
         icon: "/svg/shelf.svg",
       },
       {
-        title: "Profile",
-        to: "/dashboard",
+        title: "Book Requests",
+        to: "/admins/book-requests",
+        icon: "/svg/profile.svg",
+      },
+      {
+        title: "User Record",
+        to: "/admins/book-requests",
         icon: "/svg/profile.svg",
       },
     ],

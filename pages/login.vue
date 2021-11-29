@@ -49,7 +49,7 @@
                         </div>
 
                         <div class="d-flex flex-column justify-center">
-                            <v-btn @onClick="signIn" color="primary" block class="px-12 w-full bg-primary ">Login</v-btn>
+                            <v-btn @click="signIn()" color="primary" block class="px-12 w-full bg-primary ">Login</v-btn>
                             <nuxt-link to="/register" class="text-center mt-2">
                                 <span class="accent--text text-center">Don't have an account?</span>
                             </nuxt-link>
@@ -89,7 +89,13 @@ export default {
   },
   methods: {
     async signIn() {
-      this.$router.push("/dashboard/")
+        const data= {
+          email: this.login.usernameEmailPhoneNumber,
+          username: this.login.usernameEmailPhoneNumber,
+          password: this.login.password
+        }
+        let response = await this.$auth.loginWith("local", data);
+        // this.$router.push("/dashboard/")
       }
     },
 }

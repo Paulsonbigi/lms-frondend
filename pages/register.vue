@@ -34,6 +34,18 @@
                                 </div>
                                 <div>
                                     <v-text-field
+                                    v-model="register.username"
+                                    placeholder="Username"
+                                    label="Username"
+                                    dense
+                                    outlined
+                                    block
+                                    :required="true"
+                                    class="ma-0 p-0 "
+                                    />
+                                </div>
+                                <div>
+                                    <v-text-field
                                     v-model="register.email"
                                     placeholder="Email"
                                     label="Email"
@@ -109,7 +121,7 @@
                             </v-col>
                         </v-row>
                         <v-row class=" d-flex justify-center flex-column">
-                            <v-btn @onClick="signIn" color="primary" width="60%" class="bg-primary d-flex mx-auto">Register</v-btn>
+                            <v-btn @click="signIn" color="primary" width="60%" class="bg-primary d-flex mx-auto">{{ registering ? 'Registering' : 'Register'}}</v-btn>
                             <nuxt-link to="/login" class="text-center mt-3">
                                 <span class="accent--text text-center">Already have an account?</span>
                             </nuxt-link>
@@ -120,7 +132,7 @@
 </template>
 
 <script>
-// import { DEFAULT_RULE } from "@/constants/";
+import { mapActions, mapGetters } from "vuex"
 export default {
   components: {},
   layout: "guest",
@@ -131,6 +143,7 @@ export default {
     register: {
       firstName: null,
       lastName: null,
+      username: null,
       email: null,
       confirmPassword: null,
       phoneNumber: null,
@@ -140,13 +153,29 @@ export default {
     },
   }),
   computed: {
-    rule() {
-    //   return DEFAULT_RULE;
-    },
+    ...mapGetters({
+        'registering': 'registering',
+    })
   },
   methods: {
+    ...mapActions({
+        'userRegister': 'userRegister'
+    }),
     async signIn() {
-      this.$router.push("/dashboard/")
+        const data = {
+            firstName: this.register.firstName,
+            lastName: this.register.lastName,
+            username: this.register.username,
+            email: this.register.email,
+            phoneNumber: this.register.phoneNumber,
+            occupation: this.register.occupation,
+            password: this.register.password,
+            confirmPassword: this.register.confirmPassword,
+            address: this.register.address,
+            role: 'user'
+        }
+        this.userRegister(data)
+    //   this.$router.push("/dashboard/")
       }
     },
 }
