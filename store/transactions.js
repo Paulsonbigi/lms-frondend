@@ -32,26 +32,26 @@ export const mutations = {
 };
 
 export const actions = {
-  async getMyBorrowedBooks({ commit }) {
-    commit("SET_LOADING", true);
-    const { data } = await this.$axios.$get("/borrow/books-borrowed");
-    commit('SET_BORROWED_BOOKS', data)
-    commit("SET_LOADING", false);
-  },
+    async getMyBorrowedBooks({ commit }) {
+        commit("SET_LOADING", true);
+        const { data } = await this.$axios.$get("/borrow/books-borrowed");
+        commit('SET_BORROWED_BOOKS', data)
+        commit("SET_LOADING", false);
+    },
 
-  async getAllBooks({ commit }, registerData) {
-    commit("SET_LOADING", true);
-    const { data } = await this.$axios.$get("/book/get-books");
-    commit('SET_ALL_BOOKS', data)
-    commit("SET_LOADING", false);
-  },
+    async getAllBooks({ commit }, registerData) {
+        commit("SET_LOADING", true);
+        const { data } = await this.$axios.$get("/book/get-books");
+        commit('SET_ALL_BOOKS', data);
+        commit("SET_LOADING", false);
+    },
 
-  async getSingleBook({ commit }, bookId) {
-    commit("SET_LOADING", true);
-    const { book } = await this.$axios.$get("/book/get-books/" + bookId);
-    commit('SET_BOOK', book)
-    commit("SET_LOADING", false);
-  },
+    async getSingleBook({ commit }, bookId) {
+        commit("SET_LOADING", true);
+        const { book } = await this.$axios.$get("/book/get-books/" + bookId);
+        commit('SET_BOOK', book);
+        commit("SET_LOADING", false);
+    },
 
     async borrowBook({ commit }, applicationData) {
         commit("SET_LOADING", true);

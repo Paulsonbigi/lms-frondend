@@ -18,20 +18,21 @@
                                 <div class="grey--text mb-3">Available copies: <strong>{{singleBook.availableCopies}}</strong></div>
                                 <v-row>
                                     <v-col cols="6">
-                                        <div>Borrow book for:</div>
+                                        <div class="grey--text mb-3">Borrow book for (in days):</div>
                                     </v-col>
                                     <v-col>
                                         <div class="grey--text"> 
                                             <v-select
                                                 :items="items"
                                                 label="Days"
+                                                v-model="numberOfDays"
                                                 solo
                                                 :required="true"
                                                 ></v-select>
                                         </div>
                                     </v-col>
                                 </v-row>
-                                <div class="grey--text mb-6">Book description:
+                                <div class="grey--text mb-6 d-flex justify-center">Book description:
                                     <p class="text-justify text--disabled">{{singleBook.description}}</p>
                                 </div>
                                 <v-btn @click="borrowBook" color="primary" block class="px-12 w-full bg-primary ">Borrow Book</v-btn>
@@ -68,7 +69,7 @@ export default {
     data(){
         return {
             bookTitle: 'Purpose Driven Life',
-            items: ['1 day', '2 days', '3 days'],
+            items: [1,  2, 3],
             dialog: false,
             bookId: null,
             numberOfDays: null
@@ -77,7 +78,12 @@ export default {
     computed: {
         ...mapGetters({
             'singleBook': 'transactions/singleBook'
-        })
+        }),
+        proposedDate: function(){
+            if(this.numberOfDays){
+                return new Date(theDate.getTime() + this.numberOfDays*24*60*60*1000)
+            }
+        }
     },
     methods: {
         ...mapActions({
@@ -88,13 +94,15 @@ export default {
             this.dialog = true;
         },
         async confirmBorrow(){
-            // console.log("hi hi")
             try{
+                let currentDate = new Date();
+                let newDate = currentDate.setDate(currentDate.getDate() + this.numberOfDays);
                 const data = {
                     numberOfBooks: 1,
                     bookId: this.bookId,
-                    returnDate: this.numberOfDays + this.Date
+                    returnDate: newDate
                 }
+                console.log(data)
                 await this.borrowBookAction(data)
                 this.dialog = false;
             } catch(err){
