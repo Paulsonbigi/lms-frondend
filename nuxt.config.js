@@ -70,10 +70,10 @@ export default {
 //        data: "refresh_token", // data can be used to set the name of the property you want to send in the request.
 //      },
         endpoints: {
-          login: { url: "/user/login", method: "post" },
+          login: { url: "/user/login", method: "post", propertyName: 'data' },
 //        refresh: { url: "/api/auth/refresh-token", method: "post" },
           logout: { url: "/user/logout", method: "post" }, //  we don't have an endpoint for our logout in our API and we just remove the token from localstorage
-          user: { url: "/user/single-user", method: "get" }
+          user: { url: "/user/single-user", method: "get", propertyName: false }
         }
       }
     }

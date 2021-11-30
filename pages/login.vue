@@ -94,8 +94,13 @@ export default {
                 username: this.login.usernameEmail,
                 password: this.login.password
             }
-            console.log(loginData)
-            let response = await this.$auth.loginWith("local", loginData);
+            let response = await this.$auth.loginWith("local", {
+                data: {
+                    email: this.login.usernameEmail,
+                    username: this.login.usernameEmail,
+                    password: this.login.password
+                }
+            });
             console.log(response);
             this.$router.push("/dashboard/")
         } catch(e){
