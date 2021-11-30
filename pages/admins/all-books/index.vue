@@ -1,7 +1,6 @@
 <template>
     <main>
         <v-item-group active-class="primary">
-            <v-container>
                 <v-row>
                     
                 </v-row>
@@ -40,7 +39,6 @@
                             </template>
                     </v-col>
                 </v-row>
-            </v-container>
         </v-item-group>
     </main>
 </template>

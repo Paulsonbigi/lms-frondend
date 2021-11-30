@@ -12,10 +12,10 @@
                                 </div>
                             </v-col>
                             <v-col cols="12" md="8">
-                                <div class="grey--text mb-3">Author: <strong>Myles Munroe</strong></div>
-                                <div class="grey--text mb-3">Published on: <strong>21st of August, 2021</strong></div>
-                                <div class="grey--text mb-3">ISBN number: <strong>9875679679</strong></div>
-                                <div class="grey--text mb-3">Available copies: <strong>10</strong></div>
+                                <div class="grey--text mb-3">Author: <strong>{{singleBook.authorName}}</strong></div>
+                                <div class="grey--text mb-3">Published on: <strong>{{singleBook.publishDate}}</strong></div>
+                                <div class="grey--text mb-3">ISBN number: <strong>{{singleBook.isbnNumber}}</strong></div>
+                                <div class="grey--text mb-3">Available copies: <strong>{{singleBook.availableCopies}}</strong></div>
                                 <v-row>
                                     <v-col cols="6">
                                         <div>Borrow book for:</div>
@@ -32,7 +32,7 @@
                                     </v-col>
                                 </v-row>
                                 <div class="grey--text mb-6">Book description:
-                                    <p class="text-justify text--disabled">This is the description of this book. This is the description of this book. This is the description of this book.This is the description of this book This is the description of this book. This is the description of this book. This is the description of this book.This is the description of this book</p>
+                                    <p class="text-justify text--disabled">{{singleBook.description}}</p>
                                 </div>
                                 <v-btn @click="borrowBook" color="primary" block class="px-12 w-full bg-primary ">Borrow Book</v-btn>
                             </v-col>
@@ -45,16 +45,16 @@
                     >
                     <v-card>
                         <v-card-title class="text-h5 text-center primary--text">
-                        Borrow Book
+                            Borrow Book
                         </v-card-title>
 
                         <v-card-text class="text-center">
-                       Are you sure you want to borrow this book for 2 days
+                            Are you sure you want to borrow this book for {{numberOfDays}} days
                         </v-card-text>
 
                         <v-card-actions>
                         <v-spacer></v-spacer>
-                            <v-btn @click="confirmBorrow" color="primary" depressed block class="px-12 w-full bg-primary ">Confirm</v-btn>
+                            <v-btn @click="confirmBorrow()" color="primary" depressed block class="px-12 w-full bg-primary ">Confirm</v-btn>
                         </v-card-actions>
                     </v-card>
                     </v-dialog>
@@ -63,22 +63,49 @@
     </main>
 </template>
 <script>
+import { mapActions, mapGetters } from "vuex"
 export default {
-  data(){
-      return {
-          bookTitle: 'Purpose Driven Life',
-          items: ['1 day', '2 days', '3 days'],
-          dialog: false
-      }
-  },
-  methods: {
-      borrowBook(){
-          this.dialog = true;
-      },
-      confirmBorrow(){
-          this.dialog = false;
-      }
-  }
+    data(){
+        return {
+            bookTitle: 'Purpose Driven Life',
+            items: ['1 day', '2 days', '3 days'],
+            dialog: false,
+            bookId: null,
+            numberOfDays: null
+        }
+    },
+    computed: {
+        ...mapGetters({
+            'singleBook': 'transactions/singleBook'
+        })
+    },
+    methods: {
+        ...mapActions({
+            'getSingleBook': 'transactions/getSingleBook',
+            'borrowBookAction': 'transactions/borrowBook'
+        }),
+        borrowBook(){
+            this.dialog = true;
+        },
+        async confirmBorrow(){
+            // console.log("hi hi")
+            try{
+                const data = {
+                    numberOfBooks: 1,
+                    bookId: this.bookId,
+                    returnDate: this.numberOfDays + this.Date
+                }
+                await this.borrowBookAction(data)
+                this.dialog = false;
+            } catch(err){
+
+            }
+        }
+    },
+    mounted(){
+        this.bookId = this.$route.params.id
+        this.getSingleBook(this.bookId)
+    }
 }
 </script>
 <style scoped>

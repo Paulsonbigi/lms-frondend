@@ -4,7 +4,7 @@
                 <div class="text-h6 text-left font-weight-medium grey--text mb-10 text-capitalize">'{{bookTitle}}'</span></div>
                 <div>
                     <v-row>
-                        <v-col cols="12" md="4">
+                        <v-col cols="12" md="4" class="pa-0">
                             <div class="d-flex items-center">
                                 <v-text-field
                                     v-model="search"
@@ -45,13 +45,13 @@
                         </v-col>
                         <div>
                         </div>
-                        <v-col cols="12" md="8">
+                        <v-col cols="12" md="8" class="pa-0">
                             <v-btn class="ml-auto d-flex" color="primary" depressed>Lend Book</v-btn>
                         </v-col>
                     </v-row>
                 </div>
                 <v-row>
-                    <v-col  cols="12" >
+                    <v-col  cols="12" class="pa-0">
                         <div class="text-subtitle-1 text-left font-weight-normal grey--text mb-2" v-if="!books">
                             No book request yet, please check back !
                         </div>

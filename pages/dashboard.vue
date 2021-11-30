@@ -8,7 +8,7 @@
                             <v-card  class="d-flex align-center justify-center flex-column pa-2"  height="150" >
                                 <nuxt-link to="">
                                     <div class="text-subtitle-1 text-center mx-auto font-weight-normal grey--text">Number of books borrowed </div>
-                                    <div class="text-h3 text-center mx-auto primary--text">{{books.length}}</div>
+                                    <div class="text-h3 text-center mx-auto primary--text">{{borrowedBooks.length}}</div>
                                 </nuxt-link>
                             </v-card>
                         </v-item>
@@ -19,23 +19,26 @@
     </main>
 </template>
 <script>
+import { mapGetters, mapActions } from "vuex"
 export default {
-  components: {},
-  data(){
-      return {
-          books: [
-              {
-                  title: ''
-              },
-              {
-                  title: ''
-              },
-              {
-                  title: ''
-              }
-          ]
-      }
-  }
+    data(){
+        return {
+            
+        }
+    },
+    computed: {
+        ...mapGetters({
+            'borrowedBooks': 'transactions/borrowedBooks'
+        })
+    }, 
+    methods: {
+        ...mapActions({
+            'getMyBorrowedBooks': 'transactions/getMyBorrowedBooks'
+        })
+    },
+    mounted(){
+        this.getMyBorrowedBooks()
+    }
 }
 </script>
 <style scoped>

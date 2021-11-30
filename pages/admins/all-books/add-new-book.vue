@@ -2,7 +2,7 @@
 <div>
     <div class="text-h6 text-left font-weight-medium grey--text mb-10 text-capitalize">Add New Book</span></div>
         <v-row>
-            <v-col cols="12" md="4">
+            <v-col cols="12" md="4" class="pa-0">
                 <div>
                     <v-text-field
                         v-model="book.title"
@@ -69,7 +69,7 @@
                     />
                 </div>
             </v-col>
-            <v-col cols="12" md="4">
+            <v-col cols="12" md="4" class="pa-0">
                 <div>
                     <v-text-field
                         v-model="book.authorName"
@@ -112,7 +112,7 @@
             </v-col>
         </v-row>
         <v-row>
-            <v-col cols="12" md="4">
+            <v-col cols="12" md="4" class="pa-0">
                 <v-btn  color="primary" block class="px-12 bg-primary ">Add Book</v-btn>
             </v-col>
         </v-row>

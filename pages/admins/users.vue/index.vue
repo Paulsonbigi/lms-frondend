@@ -1,8 +1,6 @@
 <template>
     <main>
         <v-item-group active-class="primary">
-            <v-container>
-                
                 <v-row>
                     <v-col  cols="12" >
                         <div class="text-subtitle-1 text-left font-weight-normal grey--text mb-2" v-if="!books">
@@ -38,7 +36,6 @@
                             </template>
                     </v-col>
                 </v-row>
-            </v-container>
         </v-item-group>
     </main>
 </template>

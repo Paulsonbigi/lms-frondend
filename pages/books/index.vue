@@ -23,14 +23,14 @@
                                 </thead>
                                 <tbody>
                                     <tr
-                                    v-for="item in books"
+                                    v-for="item in allBooks"
                                     :key="item.id"
                                     class="grey--text"
                                     >
                                         <td>
-                                            <nuxt-link :to="'/books/' + item.id" class="grey--text">{{ item.title }}</nuxt-link>
+                                            <nuxt-link :to="'/books/' + item._id" class="grey--text">{{ item.bookTitle }}</nuxt-link>
                                         </td>
-                                        <td class="text-center">{{ item.availebleCopies }}</td>
+                                        <td class="text-center">{{ item.availableCopies }}</td>
                                     </tr>
                                 </tbody>
                                 </template>
@@ -43,18 +43,32 @@
     </main>
 </template>
 <script>
+import { mapGetters, mapActions } from "vuex"
 export default {
-  components: {},
-  data(){
-      return {
-          books: [ 
-              {title: 'Purpose driven life', availebleCopies: 10, id: '121313311'},
-              {title: 'Purpose driven life', availebleCopies: 10, id: '121313331'},
-              {title: 'Purpose driven life', availebleCopies: 10, id: '121313371'},
-              {title: 'Purpose driven life', availebleCopies: 10, id: '121313361'},
-          ]
-      }
-  }
+    components: {},
+    data(){
+        return {
+            books: [ 
+                {title: 'Purpose driven life', availebleCopies: 10, id: '121313311'},
+                {title: 'Purpose driven life', availebleCopies: 10, id: '121313331'},
+                {title: 'Purpose driven life', availebleCopies: 10, id: '121313371'},
+                {title: 'Purpose driven life', availebleCopies: 10, id: '121313361'},
+            ]
+        }
+    },
+    computed: {
+        ...mapGetters({
+            'allBooks': 'transactions/allBooks'
+        })
+    }, 
+    methods: {
+        ...mapActions({
+            'getAllBooks': 'transactions/getAllBooks'
+        })
+    },
+    mounted(){
+        this.getAllBooks()
+    }
 }
 </script>
 <style scoped>

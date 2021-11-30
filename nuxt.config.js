@@ -1,9 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
-  server: {
-    port: process.env.PORT,
-  },
   ssr: true,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -50,7 +47,7 @@ export default {
   ],
 
   axios: {
-    baseURL: process.env.API_HOST  // here set your API url
+    baseURL: "http://localhost:8080"  // here set your API url
   },
 
 

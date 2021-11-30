@@ -7,7 +7,7 @@
             
                     <v-form ref="form" v-model="valid" lazy-validation v-on:keyup.native.enter="signIn" >
                         <v-row class="px-10 py-10">
-                            <v-col cols="12" md="6" >
+                            <v-col cols="12" md="6" class="pa-0">
                                 <div>
                                     <v-text-field
                                     v-model="register.firstName"
@@ -84,7 +84,7 @@
                                     />
                                 </div>
                             </v-col>
-                            <v-col cols="12" md="6" >
+                            <v-col cols="12" md="6" class="pa-0">
                                 <div>
                                     <v-text-field
                                     v-model="register.phoneNumber"
@@ -166,20 +166,29 @@ export default {
         'userRegister': 'userRegister'
     }),
     async signIn() {
-        const data = {
-            firstName: this.register.firstName,
-            lastName: this.register.lastName,
-            username: this.register.username,
-            email: this.register.email,
-            phoneNumber: this.register.phoneNumber,
-            occupation: this.register.occupation,
-            password: this.register.password,
-            confirmPassword: this.register.confirmPassword,
-            address: this.register.address,
-            role: 'user'
-        }
-        this.userRegister(data)
-    //   this.$router.push("/dashboard/")
+        try{
+            const data = {
+                firstName: this.register.firstName,
+                lastName: this.register.lastName,
+                username: this.register.username,
+                email: this.register.email,
+                phoneNumber: this.register.phoneNumber,
+                occupation: this.register.occupation,
+                password: this.register.password,
+                confirmPassword: this.register.confirmPassword,
+                address: this.register.address,
+                role: 'user'
+            }
+            await this.userRegister(data);
+            const loginData = {
+                username: this.register.username,
+                email: this.register.email,
+                password: this.register.password,
+            }
+            let response = await this.$auth.loginWith("local", loginData);
+        } catch(e){
+
+        }  
       }
     },
 }

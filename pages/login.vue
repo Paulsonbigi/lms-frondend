@@ -6,19 +6,15 @@
         <v-card max-width="900" class="d-flex flex-column mx-auto relative bg-tertiary">
             
             <v-row class="px-10 py-10">
-                <v-col cols="12" md="6" class="mx-auto">
-                     <v-form
-                        ref="form"
-                        v-model="valid"
-                        lazy-validation
-                        v-on:keyup.native.enter="signIn"
+                <v-col cols="12" md="6" class="mx-auto pa-0">
+                     <v-form ref="form" v-model="valid" lazy-validation v-on:keyup.native.enter="signIn"
                     >
                         <div class="mb-10">
                             <h2 class="accent--text">User <span class="primary--text">Login</span></h2>
                         </div>
                         <div>
                             <v-text-field
-                                v-model="login.usernameEmailPhoneNumber"
+                                v-model="login.usernameEmail"
                                 placeholder="Username"
                                 label="Username/email"
                                 dense
@@ -81,9 +77,8 @@ export default {
     valid: false,
     show1: false,
     login: {
-      usernameEmailPhoneNumber: "",
-      password: "",
-      restriction: "Staff",
+      usernameEmail: null,
+      password: null,
     },
   }),
   computed: {
@@ -93,13 +88,19 @@ export default {
   },
   methods: {
     async signIn() {
-        const data= {
-          email: this.login.usernameEmailPhoneNumber,
-          username: this.login.usernameEmailPhoneNumber,
-          password: this.login.password
+        try{
+            const loginData= {
+                email: this.login.usernameEmail,
+                username: this.login.usernameEmail,
+                password: this.login.password
+            }
+            console.log(loginData)
+            let response = await this.$auth.loginWith("local", loginData);
+            console.log(response);
+            this.$router.push("/dashboard/")
+        } catch(e){
+            // console.log(e)
         }
-        let response = await this.$auth.loginWith("local", data);
-        // this.$router.push("/dashboard/")
       }
     },
 }

@@ -141,7 +141,7 @@ export default {
       {
         title: "Dashboard",
         to: "/admins/dashboard",
-        icon: "/svg/dashboard.svg",
+        icon: "/svg/Vector.svg",
       },
       {
         title: "All Users",
