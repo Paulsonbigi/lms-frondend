@@ -28,9 +28,9 @@
                                     class="grey--text"
                                     >
                                         <td>
-                                            <nuxt-link :to="'/books/' + item._id" class="grey--text">{{ item.bookTitle }}</nuxt-link>
+                                            <nuxt-link :is="item.availableCopies < 1 ? 'span' : 'router-link'" :to="'/books/' + item._id" class="grey--text">{{ item.bookTitle }}</nuxt-link>
                                         </td>
-                                        <td class="text-center">{{ item.availableCopies }}</td>
+                                        <td class="text-center">{{ item.availableCopies > 1 ?  item.availableCopies : 'Out of stock' }}</td>
                                     </tr>
                                 </tbody>
                                 </template>
@@ -45,6 +45,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex"
 export default {
+    middleware: ['auth', 'isUser'],
     components: {},
     data(){
         return {

@@ -1,5 +1,6 @@
 <template>
     <main>
+    <v-container>
         <v-item-group active-class="primary">
                 <div class="text-h6 text-left font-weight-medium grey--text mb-10 text-capitalize">'{{bookTitle}}'</span></div>
                 <div>
@@ -91,12 +92,13 @@
                     </v-col>
                 </v-row>
         </v-item-group>
+        </v-container>
     </main>
 </template>
 <script>
 export default {
+    middleware: ['auth', 'isAdmin'],
   components: {},
-  layout: 'admin',
   data(){
       return {
           loading: false,

@@ -66,6 +66,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex"
 export default {
+    middleware: ['auth', 'isUser'],
     data(){
         return {
             bookTitle: 'Purpose Driven Life',
@@ -102,9 +103,13 @@ export default {
                     bookId: this.bookId,
                     returnDate: newDate
                 }
-                console.log(data)
                 await this.borrowBookAction(data)
                 this.dialog = false;
+                //     this.$notify({
+                //     group: 'auth',
+                //     text: 'Request successful, admin will review your request shortly',
+                //     duration: 1500,
+                // });
             } catch(err){
 
             }

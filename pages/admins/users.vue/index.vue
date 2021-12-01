@@ -21,14 +21,12 @@
                                 </thead>
                                 <tbody>
                                     <tr
-                                    v-for="item in books"
-                                    :key="item.id"
+                                    v-for="item in allUsers"
+                                    :key="item._id"
                                     class="grey--text"
                                     >
-                                        <td>
-                                            <nuxt-link :to="'/books/' + item.id" class="grey--text">{{ item.title }}</nuxt-link>
-                                        </td>
-                                        <td class="text-center">{{ item.availebleCopies }}</td>
+                                        <td class="grey--text">{{ item.firstName }}                                </td>
+                                        <td class="text-center">{{ item.updatedAt }}</td>
                                     </tr>
                                 </tbody>
                                 </template>
@@ -40,19 +38,33 @@
     </main>
 </template>
 <script>
+import { mapActions, mapGetters } from "vuex"
 export default {
-  components: {},
-  layout: 'admin',
-  data(){
-      return {
-          books: [ 
-              {title: 'Purpose driven life', availebleCopies: 10, id: '121313311'},
-              {title: 'Purpose driven life', availebleCopies: 10, id: '121313331'},
-              {title: 'Purpose driven life', availebleCopies: 10, id: '121313371'},
-              {title: 'Purpose driven life', availebleCopies: 10, id: '121313361'},
-          ]
-      }
-  }
+    middleware: ['auth', 'isAdmin'],
+    components: {},
+    data(){
+        return {
+            books: [ 
+                {title: 'Purpose driven life', availebleCopies: 10, id: '121313311'},
+                {title: 'Purpose driven life', availebleCopies: 10, id: '121313331'},
+                {title: 'Purpose driven life', availebleCopies: 10, id: '121313371'},
+                {title: 'Purpose driven life', availebleCopies: 10, id: '121313361'},
+            ]
+        }
+    },
+    computed: {
+        ...mapGetters({
+            'allUsers': 'administration/allUsers'
+        })
+    },
+    methods: {
+        ...mapActions({
+            'getAllUsers': 'administration/getAllUsers'
+        })
+    },
+    mounted(){
+        this.getAllUsers()
+    }
 }
 </script>
 <style scoped>

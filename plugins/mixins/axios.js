@@ -4,15 +4,15 @@ export default function ({ $axios, store, app}){
 
         if (error){
             if (error.response.status === 422) {
-                store.dispatch('validation/setErrors', error.response.data.errors ? error.response.data.errors : null)
+                store.dispatch('validation/setErrors', error.response.message ? error.response.message : null)
 
-                let messageData1 = {'text': error.response.data.message, 'target': null, 'type': 'error', 'time': null}
+                let messageData1 = {'text': error.response.message, 'target': null, 'type': 'error', 'time': null}
 
                 store.dispatch('message/setMessage', messageData1)
                 
             }
             if (error.response.status === 400) {
-                store.dispatch('validation/setErrors', error.response.data.errors ? error.response.data.errors : null)
+                store.dispatch('validation/setErrors', error.response.message ? error.response.message : null)
 
                 let messageData2 = {'text': error.response.data.message, 'target': null, 'type': 'info', 'time': null}
 
@@ -41,9 +41,9 @@ export default function ({ $axios, store, app}){
     $axios.onResponse(response => {
         if (response){
             if (response.status === 200) {
-                if (response.data.message)
+                if (response.message)
                 {
-                    let messageData3 = {'text': response.data.message, 'target': null, 'type': 'success', 'time': null}
+                    let messageData3 = {'text': response.message, 'target': null, 'type': 'success', 'time': null}
                     store.dispatch('message/setMessage', messageData3)
 
                     if( response.config.method === 'post' ||  response.config.method === 'delete'){
@@ -52,7 +52,7 @@ export default function ({ $axios, store, app}){
                             title: 'Important message',
                             text: response.data.message,
                             type: 'success',
-                            duration: 15000,
+                            duration: 1500,
                         })
                     }
                 }

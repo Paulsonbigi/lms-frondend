@@ -1,6 +1,7 @@
 <template>
     <main>
         <v-item-group active-class="primary">
+        <v-container fluid>
                 <div>
                     <v-row>
                         <v-col cols="12" md="4">
@@ -39,7 +40,7 @@
 
                 <v-row>
                     <v-col  cols="12" >
-                        <div class="text-subtitle-1 text-left font-weight-normal grey--text mb-2" v-if="!books">
+                        <div class="text-subtitle-1 text-left font-weight-normal grey--text mb-2" v-if="!bookRequests">
                             No book request yet, please check back !
                         </div>
                         <template>
@@ -57,14 +58,14 @@
                                 </thead>
                                 <tbody>
                                     <tr
-                                    v-for="item in books"
-                                    :key="item.id"
-                                    class="grey--text"
+                                        v-for="item in bookRequests"
+                                        :key="item.id"
+                                        class="grey--text"
                                     >
                                         <td>
-                                            <nuxt-link :to="'/admins/book-requests/' + item.id" class="grey--text">{{ item.title }}</nuxt-link>
+                                            <nuxt-link :to="'/admins/book-requests/' + item.id" class="grey--text" v-if="item.appliedBooks">{{ item.appliedBooks }}</nuxt-link>
                                         </td>
-                                        <td class="text-center">{{ item.availebleCopies }}</td>
+                                        <td class="text-center" v-if="item.appliedBooks">{{ item.appliedBooks.availableCopies }}</td>
                                     </tr>
                                 </tbody>
                                 </template>
@@ -72,25 +73,40 @@
                             </template>
                     </v-col>
                 </v-row>
+                </v-container>
         </v-item-group>
     </main>
 </template>
 <script>
+import { mapGetters, mapActions } from "vuex"
 export default {
-  components: {},
-  layout: 'admin',
-  data(){
-      return {
-          loading: false,
-          search: null,
-          books: [ 
-              {title: 'Purpose driven life', availebleCopies: 10, id: '121313311'},
-              {title: 'Purpose driven life', availebleCopies: 10, id: '121313331'},
-              {title: 'Purpose driven life', availebleCopies: 10, id: '121313371'},
-              {title: 'Purpose driven life', availebleCopies: 10, id: '121313361'},
-          ]
-      }
-  }
+    middleware: ['auth', 'isAdmin'],
+    components: {},
+    data(){
+        return {
+            loading: false,
+            search: null,
+            books: [ 
+                {title: 'Purpose driven life', availebleCopies: 10, id: '121313311'},
+                {title: 'Purpose driven life', availebleCopies: 10, id: '121313331'},
+                {title: 'Purpose driven life', availebleCopies: 10, id: '121313371'},
+                {title: 'Purpose driven life', availebleCopies: 10, id: '121313361'},
+            ]
+        }
+    },
+    computed: {
+        ...mapGetters({
+            'bookRequests': 'administration/bookRequests'
+        })
+    },
+    methods:{
+        ...mapActions({
+            'getAllBookRequests': 'administration/getAllBookRequests'
+        })
+    },
+    mounted(){
+        this.getAllBookRequests()
+    }
 }
 </script>
 <style scoped>

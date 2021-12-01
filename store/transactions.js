@@ -29,6 +29,10 @@ export const mutations = {
   SET_BOOK(state, singleBook) {
     state.singleBook = singleBook;
   },
+
+  SET_BOOK_EDITED_DATA(state, { item, value }) {
+    Vue.set(state.singleBook, item, value);
+  },
 };
 
 export const actions = {
@@ -41,7 +45,14 @@ export const actions = {
 
     async getAllBooks({ commit }, registerData) {
         commit("SET_LOADING", true);
-        const { data } = await this.$axios.$get("/book/get-books");
+        const { data } = await this.$axios.$get(`/book/get-books?`, );
+        commit('SET_ALL_BOOKS', data);
+        commit("SET_LOADING", false);
+    },
+
+    async getAllBooksSearch({ commit }, registerData) {
+        commit("SET_LOADING", true);
+        const { data } = await this.$axios.$get(`/book/search?${registerData}` );
         commit('SET_ALL_BOOKS', data);
         commit("SET_LOADING", false);
     },
@@ -58,4 +69,12 @@ export const actions = {
         await this.$axios.$post("/borrow/apply", applicationData);
         commit("SET_LOADING", false);
     },
+
+    async editBook({ commit }, formData ) {
+        
+        console.log(formData)
+      commit("SET_LOADING", true);
+      await this.$axios.$patch(`/book/update/${formData.bookId}`, formData.dataM);
+      commit("SET_REGISTERING", false);
+    }
 };

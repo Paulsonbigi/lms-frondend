@@ -4,6 +4,7 @@ export const state = () => ({
   loggedIn: false,
   user: false,
   registering: false
+  
 });
 
 export const getters = {

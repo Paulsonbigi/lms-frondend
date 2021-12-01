@@ -7,7 +7,7 @@
             
                     <v-form ref="form" v-model="valid" lazy-validation v-on:keyup.native.enter="signIn" >
                         <v-row class="px-10 py-10">
-                            <v-col cols="12" md="6" class="pa-0">
+                            <v-col cols="12" md="6" class="pa-2">
                                 <div>
                                     <v-text-field
                                     v-model="register.firstName"
@@ -84,7 +84,7 @@
                                     />
                                 </div>
                             </v-col>
-                            <v-col cols="12" md="6" class="pa-0">
+                            <v-col cols="12" md="6" class="pa-2">
                                 <div>
                                     <v-text-field
                                     v-model="register.phoneNumber"
@@ -180,12 +180,23 @@ export default {
                 role: 'user'
             }
             await this.userRegister(data);
-            const loginData = {
-                username: this.register.username,
-                email: this.register.email,
-                password: this.register.password,
+            console.log("hih after registering")
+            if(this.registering = false){
+                
+                await this.$auth.loginWith("local", {
+                    data: {
+                        email: this.login.usernameEmail,
+                        username: this.login.usernameEmail,
+                        password: this.login.password
+                    }
+                });
+                await this.$notify({
+                    group: 'auth',
+                    text: `Registration successful`,
+                    duration: 1500,
+                })
+                this.$router.push("dashboard")
             }
-            let response = await this.$auth.loginWith("local", loginData);
         } catch(e){
 
         }  

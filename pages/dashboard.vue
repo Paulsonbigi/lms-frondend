@@ -21,6 +21,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex"
 export default {
+    middleware: ['auth', 'isUser'],
     data(){
         return {
             
@@ -37,6 +38,14 @@ export default {
         })
     },
     mounted(){
+        if(this.user.role ==="admin"){
+            this.$router.push("/admins/dashboard")
+        }
+        this.$notify({
+            group: 'all',
+            text: `Welcome ${this.user.firstName}`,
+            duration: 1500,
+        })
         this.getMyBorrowedBooks()
     }
 }

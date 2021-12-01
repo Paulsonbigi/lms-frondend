@@ -88,21 +88,28 @@ export default {
   },
   methods: {
     async signIn() {
+        
         try{
-            const loginData= {
-                email: this.login.usernameEmail,
-                username: this.login.usernameEmail,
-                password: this.login.password
+            if(!this.login.usernameEmail){
+                this.$notify({
+                    group: 'auth',
+                    text: `Please enter all fields to continue`,
+                    duration: 1500,
+                })
             }
-            let response = await this.$auth.loginWith("local", {
+            await this.$auth.loginWith("local", {
                 data: {
                     email: this.login.usernameEmail,
                     username: this.login.usernameEmail,
                     password: this.login.password
                 }
             });
-            console.log(response);
-            this.$router.push("/dashboard/")
+            await this.$notify({
+                group: 'all',
+                text: `Welcome ...`,
+                duration: 1500,
+            })
+                this.$router.push("dashboard")
         } catch(e){
             // console.log(e)
         }
